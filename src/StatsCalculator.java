@@ -87,64 +87,48 @@ public class StatsCalculator {
         }
         return min;
     }
-
     /**
      * @description finds the first quartile of the sorted array
      * @return the first quartile
      */
-    public double calculateFirstQuartile() {
-        int index = 0;
-        double[] first;
-        first = new double[sortedValues.length / 2];
-        for (int i = 0; i < first.length - 1; i++) {
-            first[i] = sortedValues[i];
+    public double calculateFirstQuartile(){
+        double first;
+        if(sortedValues.length % 4 == 0) { //even length mod 4
+            first = (sortedValues[(sortedValues.length / 4) - 1] + sortedValues[(sortedValues.length / 4)]) / 2;
+            //first = sortedValues[(int)(sortedValues.length * .25)];
+        }else if(sortedValues.length % 2 == 0) { // even length mod 2
+            first = sortedValues[(sortedValues.length / 4)] ;
+        }else{ // odd length
+            first = sortedValues[sortedValues.length / 4];
+            //first = sortedValues[(int) (sortedValues.length *.25)];
         }
-        if (first.length % 2 == 1) {
-            return first[first.length / 2];
-        } else {
-            return (first[first.length / 2] + first[first.length / 2 - 1]) / 2.0;
-        }
+        return first;
     }
 
     /**
      * @description finds the third quartile of the sorted array
      * @return the third quartile
      */
-    public double calculateThirdQuartile() {
-        double[] last;
-        if (sortedValues.length % 2 == 1) {
-            last = new double[sortedValues.length / 2];
-            int indexLast = 0;
-            for (int i = sortedValues.length / 2 + 1; i < sortedValues.length; i++) {
-                last[indexLast] = sortedValues[i];
-                indexLast++;
-            }
-            if (last.length % 2 == 1) {
-                return last[last.length / 2];
-            } else {
-                return (last[last.length / 2] + last[last.length / 2 - 1]) / 2;
-            }
-        }else{
-            last = new double[sortedValues.length/2];
-            int indexLast = 0;
-            for(int i = sortedValues.length / 2; i< sortedValues.length - 1; i++){
-                last[indexLast] = sortedValues[i];
-                indexLast++;
-            }
-            if(last.length % 2 == 1){
-                return last[last.length / 2];
-            }else{
-                return (last[last.length / 2] + last[last.length / 2 - 1]) / 2.0;
-            }
+    public double calculateThirdQuartile(){
+        double third;
+        if(sortedValues.length % 4 == 0) { // even length
+            third = (sortedValues[(sortedValues.length / 4) + (sortedValues.length / 2) - 1] + sortedValues[(sortedValues.length / 4) + (sortedValues.length / 2)]) / 2;
+            //third = sortedValues[(int) (sortedValues.length * .75)-1];
+        }else if(sortedValues.length % 2 == 0) { // even length mod 2
+            third = sortedValues[(sortedValues.length / 4)+ (sortedValues.length / 2)];
+        }else{ // odd length
+            third = sortedValues[(sortedValues.length / 4) + (sortedValues.length/2)+1];
+            //third = sortedValues[(int) (sortedValues.length * .75)];
         }
+        return third;
     }
 
     /**
      * @description finds the median of the sorted array
      * @return the median
      */
-    public double  calculateMedian(){
-        double median = 0;
+    public double calculateMedian(){
+        double median;
         if(sortedValues.length % 2 == 0){
             median = (sortedValues[sortedValues.length / 2] + sortedValues[sortedValues.length / 2 - 1]) /2;
         }else{
@@ -170,8 +154,8 @@ public class StatsCalculator {
      * @return the mean
      */
     public double calculateMean(){
-        int sum = 0;
-        int mean = 0;
+        double sum = 0;
+        double mean = 0;
         for(int i = 0; i < sortedValues.length; i++){
             sum += sortedValues[i];
 
